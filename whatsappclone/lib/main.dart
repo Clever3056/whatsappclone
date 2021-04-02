@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/src/widgets/basic.dart';
 
 void main() {
   runApp(HomePage());
@@ -16,44 +19,91 @@ class HomePage extends StatelessWidget {
 class MainWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: Icon(Icons.person),
-        title: Text("Chats"),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () {},
-          ),
-        ],
-        backgroundColor: Colors.green,
-      ),
-      body: Center(
-        child: ListView(
+    return DefaultTabController(
+      length: 4,
+      child: Scaffold(
+        appBar: AppBar(
+          bottom: TabBar(tabs: [
+            Tab(
+              text: "camera",
+            ),
+            Tab(
+              text: "charts",
+            ),
+            Tab(
+              text: "status",
+            ),
+            Tab(
+              text: "calls",
+            )
+          ]),
+          leading: Icon(Icons.person),
+          title: Text("Chats"),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () {},
+            ),
+          ],
+          backgroundColor: Colors.green,
+        ),
+        body: TabBarView(
           children: [
-            _listItem(),
-            _listItem(),
-            _listItem(),
-            _listItem(),
-            _listItem(),
-            _listItem(),
-            _listItem(),
-            _listItem(),
-            _listItem(),
-            _listItem(),
-            _listItem(),
+            buildCameraPage(context),
+            buildChart(),
+            Center(child: Text("status")),
+            Center(child: Text("calls")),
           ],
         ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.green,
+          onPressed: () {},
+          child: Icon(Icons.add),
+        ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.green,
-        onPressed: () {},
-        child: Icon(Icons.add),
+    );
+  }
+
+  Center buildChart() {
+    return Center(
+      child: ListView(
+        children: [
+          _listItem(),
+          _listItem(),
+          _listItem(),
+          _listItem(),
+          _listItem(),
+          _listItem(),
+          _listItem(),
+          _listItem(),
+          _listItem(),
+          _listItem(),
+          _listItem(),
+        ],
       ),
+    );
+  }
+
+  Widget buildCameraPage(BuildContext context) {
+    return Scaffold(
+      body: Center(
+          child: IconButton(
+        onPressed: () {
+          final snackBar = SnackBar(content: Text('Yay! A SnackBar!'));
+
+// Find the ScaffoldMessenger in the widget tree
+// and use it to show a SnackBar.
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        },
+        icon: Icon(
+          Icons.camera_alt,
+          size: 40,
+        ),
+      )),
     );
   }
 
@@ -62,7 +112,7 @@ class MainWidget extends StatelessWidget {
       dense: true,
       minLeadingWidth: 12.0,
       leading: CircleAvatar(
-        child: Text("AW"),
+        child: Icon(Icons.access_alarm),
       ),
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
